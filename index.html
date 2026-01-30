@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#">Events</a>
+    <button id="loginBtn" class="login-trigger">Login</button>
+</div>
+
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Member Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="submit-btn">Sign In</button>
+        </form>
+    </div>
+</div>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI SB MBCET</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="logo.png" alt="CSI Logo" class="main-logo">
+            <span>CSI SB MBCET</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Events</a>
+            <a href="#">About</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Events</h1>
+        <p>Explore the journey of technology with us</p>
+    </header>
+
+    <div id="event-grid" class="grid"></div>
+
+    <footer class="footer">
+        <p>Visit our official site: <a href="http://www.csimbcet.com" style="color: #3498db;">www.csimbcet.com</a></p>
+        <p>&copy; 2025 CSI SB MBCET</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

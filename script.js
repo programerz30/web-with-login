@@ -9,9 +9,7 @@ const firebaseConfig = {
   measurementId: "G-TB7WB1E17B"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
@@ -51,7 +49,17 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value;
 
     console.log("Attempting login with:", email);
-    
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            console.log("Logged in:", userCredential.user);
+            alert("Login Successful!");
+            modal.style.display = "none"; // Close your login popup
+        })
+        .catch((error) => {
+            console.error("Login Error:", error.code, error.message);
+            alert("Login failed: " + error.message);
+        });
+});
     // NEXT STEP: Send this data to a server
     // For now, let's just pretend it worked
     alert("Authentication requires a backend server!");
@@ -88,4 +96,5 @@ myEvents.forEach(event => {
             <a href="${event.link}" target="_blank" style="color:#3498db; text-decoration:none; font-weight:bold;">Learn More →</a>
         </div>
     `;
+
 });

@@ -1,4 +1,4 @@
-// Paste this at the TOP of script.js
+// 1. Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCj6KmcvgfVxCFTpjsL1GhpEVTMQH6OLAK",
   authDomain: "web-6ef07.firebaseapp.com",
@@ -9,61 +9,58 @@ const firebaseConfig = {
   measurementId: "G-TB7WB1E17B"
 };
 
-
-// Initialize Firebase
+// 2. Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Handle Login
-document.getElementById('loginForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            alert("Welcome back!");
-            modal.style.display = "none";
-            // You can now hide the login button and show a "Logout" button
-        })
-        .catch((error) => {
-            alert("Error: " + error.message);
-        });
-});
+// 3. UI Elements
 const modal = document.getElementById("loginModal");
 const btn = document.getElementById("loginBtn");
 const span = document.getElementsByClassName("close")[0];
+const loginForm = document.getElementById('loginForm');
 
 // Open Modal
-btn.onclick = () => modal.style.display = "block";
+if(btn) {
+    btn.onclick = () => modal.style.display = "block";
+}
 
 // Close Modal
-span.onclick = () => modal.style.display = "none";
+if(span) {
+    span.onclick = () => modal.style.display = "none";
+}
 
-// Handle Login Submission
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+// Close Modal if user clicks outside of it
+window.onclick = (event) => {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
 
-    console.log("Attempting login with:", email);
-    auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            console.log("Logged in:", userCredential.user);
-            alert("Login Successful!");
-            modal.style.display = "none"; // Close your login popup
-        })
-        .catch((error) => {
-            console.error("Login Error:", error.code, error.message);
-            alert("Login failed: " + error.message);
-        });
-});
-    // NEXT STEP: Send this data to a server
-    // For now, let's just pretend it worked
-    alert("Authentication requires a backend server!");
-});
+// 4. Handle Login Submission
+if(loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        console.log("Attempting login with:", email);
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                console.log("Logged in:", userCredential.user);
+                alert("Login Successful! Welcome back.");
+                modal.style.display = "none";
+                // Optional: window.location.reload(); // Refresh to update UI
+            })
+            .catch((error) => {
+                console.error("Login Error:", error.code, error.message);
+                alert("Login failed: " + error.message);
+            });
+    });
+}
+
+// 5. Events Grid Logic
 const myEvents = [
     {
         title: "AD ASTRA",
@@ -86,15 +83,15 @@ const myEvents = [
 ];
 
 const container = document.getElementById('event-grid');
-
-myEvents.forEach(event => {
-    container.innerHTML += `
-        <div class="card">
-            <span class="date">🗓 ${event.date}</span>
-            <h2>${event.title}</h2>
-            <p>${event.description}</p>
-            <a href="${event.link}" target="_blank" style="color:#3498db; text-decoration:none; font-weight:bold;">Learn More →</a>
-        </div>
-    `;
-
-});
+if(container) {
+    myEvents.forEach(event => {
+        container.innerHTML += `
+            <div class="card">
+                <span class="date">🗓 ${event.date}</span>
+                <h2>${event.title}</h2>
+                <p>${event.description}</p>
+                <a href="${event.link}" target="_blank" style="color:#3498db; text-decoration:none; font-weight:bold;">Learn More →</a>
+            </div>
+        `;
+    });
+}

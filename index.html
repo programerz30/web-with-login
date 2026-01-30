@@ -1,32 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-
-<script src="script.js"></script>
-<div class="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Events</a>
-    <button id="loginBtn" class="login-trigger">Login</button>
-</div>
-
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Member Login</h2>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit" class="submit-btn">Sign In</button>
-        </form>
-    </div>
-</div>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSI SB MBCET</title>
     <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -39,8 +20,21 @@
             <a href="#">Home</a>
             <a href="#">Events</a>
             <a href="#">About</a>
+            <button id="loginBtn" class="login-trigger">Login</button>
         </div>
     </nav>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Member Login</h2>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
 
     <header class="hero">
         <h1>Events</h1>
@@ -56,5 +50,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>

@@ -22,7 +22,7 @@
             
             <button id="loginBtn" class="login-trigger">Login</button>
             
-            <span id="userEmail" style="display:none; color: #3498db; font-weight: bold; margin-right: 10px;"></span>
+            <span id="userDisplay" style="display:none; color: #3498db; font-weight: bold; margin-right: 10px;"></span>
             <button id="logoutBtn" style="display:none;" class="logout-trigger">Logout</button>
         </div>
     </nav>
@@ -44,9 +44,27 @@
             <div id="signUpSection" style="display: none;">
                 <h2>Create Account</h2>
                 <form id="signUpForm">
-                    <input type="email" id="signupEmail" placeholder="Email" required>
+                    <input type="text" id="signupName" placeholder="Full Name" required>
+                    <input type="email" id="signupEmail" placeholder="College Email" required>
+                    <input type="tel" id="signupPhone" placeholder="Phone Number" required>
+                    
+                    <select id="signupDept" class="form-select" required>
+                        <option value="" disabled selected>Select Department</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EEE">EEE</option>
+                        <option value="ME">Mechanical</option>
+                        <option value="CE">Civil</option>
+                    </select>
+
                     <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required>
-                    <button type="submit" class="submit-btn" style="background-color: #27ae60;">Register</button>
+                    
+                    <div id="otpArea" style="display:none; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
+                        <p style="color: #27ae60; font-size: 13px;">Check your Gmail for the code!</p>
+                        <input type="text" id="otpInput" placeholder="6-Digit Verification Code">
+                    </div>
+
+                    <button type="submit" id="mainSignupBtn" class="submit-btn" style="background-color: #27ae60;">Send Verification Code</button>
                 </form>
                 <p>Already have an account? <a href="#" id="toLogin">Login here</a></p>
             </div>

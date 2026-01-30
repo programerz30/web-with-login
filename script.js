@@ -1,4 +1,4 @@
-// 1. Firebase Configuration
+// 1. Firebase Configuration (Matches your Firebase Project)
 const firebaseConfig = {
   apiKey: "AIzaSyCj6KmcvgfVxCFTpjsL1GhpEVTMQH6OLAk",
   authDomain: "web-6ef07.firebaseapp.com",
@@ -8,7 +8,6 @@ const firebaseConfig = {
   appId: "1:1028816794584:web:792e488366197446d778ad"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
@@ -21,23 +20,12 @@ const loginSection = document.getElementById("loginSection");
 const signUpSection = document.getElementById("signUpSection");
 let generatedOTP = null;
 
-// 3. Navigation & Modal Logic
+// 3. Navigation Logic
 loginBtn.onclick = () => { modal.style.display = "block"; };
 document.getElementById("closeModal").onclick = () => { modal.style.display = "none"; };
+document.getElementById("toSignUp").onclick = (e) => { e.preventDefault(); loginSection.style.display = "none"; signUpSection.style.display = "block"; };
+document.getElementById("toLogin").onclick = (e) => { e.preventDefault(); signUpSection.style.display = "none"; loginSection.style.display = "block"; };
 
-document.getElementById("toSignUp").onclick = (e) => { 
-    e.preventDefault(); 
-    loginSection.style.display = "none"; 
-    signUpSection.style.display = "block"; 
-};
-
-document.getElementById("toLogin").onclick = (e) => { 
-    e.preventDefault(); 
-    signUpSection.style.display = "none"; 
-    loginSection.style.display = "block"; 
-};
-
-// 4. Auth State Tracking (Update UI when logged in)
 auth.onAuthStateChanged((user) => {
     if (user) {
         loginBtn.style.display = "none";
@@ -51,86 +39,63 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
-// 5. SIGN UP & OTP LOGIC
+// 4. SIGN UP & OTP LOGIC
 document.getElementById('signUpForm').addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Force initialize EmailJS with your Public Key right before use
-    emailjs.init("Cr8Skylldo6vUX6ae"); 
-
     const emailAddr = document.getElementById('signupEmail').value;
     const name = document.getElementById('signupName').value;
     const password = document.getElementById('signupPassword').value;
     const otpInput = document.getElementById('otpInput').value;
     const mainBtn = document.getElementById('mainSignupBtn');
 
-    // PHASE 1: Generate and Send OTP
     if (!generatedOTP) {
         generatedOTP = Math.floor(100000 + Math.random() * 900000);
 
-        // This object matches the {{tags}} in your EmailJS template screenshot
+        // Parameters match your template exactly: {{email}}, {{passcode}}, {{time}}
         const templateParams = {
-            email: emailAddr,      // Matches {{email}} in "To Email" field
-            passcode: generatedOTP, // Matches {{passcode}} in your Main Body
+            email: emailAddr,
+            passcode: generatedOTP,
             user_name: name,
-            time: "15 minutes"     // Matches {{time}} in your Main Body
+            time: "15 minutes"
         };
 
-        // Sending via your Service and Template IDs
-        emailjs.send('service_r60hbpq', 'template_8hjqxzg', templateParams)
+        // We include your Public Key (Cr8Skylldo6vUX6ae) directly in the send call
+        emailjs.send('service_r60hbpq', 'template_8hjqxzg', templateParams, 'Cr8Skylldo6vUX6ae')
             .then(() => {
-                alert("Success! Verification code sent to " + emailAddr);
+                alert("Success! Check your Gmail for code.");
                 document.getElementById('otpArea').style.display = "block";
-                mainBtn.innerText = "Verify & Complete Registration";
-                mainBtn.style.backgroundColor = "#2ecc71";
+                mainBtn.innerText = "Verify & Register";
             })
             .catch((err) => {
-                alert("Email Error: " + err.text + ". Ensure 'Private Key' is UNCHECKED in EmailJS Security.");
-                console.error("EmailJS Error details:", err);
+                // If this fails, the Private Key is definitely still checked in your dashboard
+                alert("Email Error: Ensure 'Private Key' is UNCHECKED in EmailJS Security settings.");
+                console.error("Error Detail:", err);
                 generatedOTP = null; 
             });
             
-    } 
-    // PHASE 2: Verify Code and Create Account
-    else {
+    } else {
         if (otpInput == generatedOTP) {
             auth.createUserWithEmailAndPassword(emailAddr, password)
-                .then((result) => {
-                    // Update user profile with their name
-                    return result.user.updateProfile({ displayName: name });
-                })
+                .then((res) => res.user.updateProfile({ displayName: name }))
                 .then(() => {
-                    alert("Account Verified & Created Successfully!");
+                    alert("Account Created!");
                     modal.style.display = "none";
                     generatedOTP = null;
                 })
-                .catch(err => {
-                    alert("Firebase Error: " + err.message);
-                });
+                .catch(err => alert("Firebase: " + err.message));
         } else {
-            alert("The code you entered is incorrect. Please check your Gmail again.");
+            alert("Wrong code!");
         }
     }
 });
 
-// 6. LOGIN & LOGOUT
+// 5. Login/Logout
 document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById('email').value;
-    const pass = document.getElementById('password').value;
-
-    auth.signInWithEmailAndPassword(email, pass)
-        .then(() => {
-            modal.style.display = "none";
-            alert("Welcome back!");
-        })
-        .catch(err => {
-            alert("Login Failed: " + err.message);
-        });
+    auth.signInWithEmailAndPassword(document.getElementById('email').value, document.getElementById('password').value)
+        .then(() => modal.style.display = "none")
+        .catch(err => alert(err.message));
 });
 
-logoutBtn.onclick = () => {
-    auth.signOut().then(() => {
-        alert("Logged out successfully.");
-    });
-};
+logoutBtn.onclick = () => auth.signOut();

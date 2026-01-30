@@ -63,7 +63,7 @@ document.getElementById('signUpForm').addEventListener('submit', (e) => {
 
         // Your Service ID is service_r60hbpq
         // 2. TODO: Replace 'YOUR_TEMPLATE_ID' with your real ID from EmailJS
-        emailjs.send('service_r60hbpq', 'YOUR_TEMPLATE_ID', templateParams)
+        emailjs.send('service_r60hbpq', 'template_8hjqxzg', templateParams)
             .then(function() {
                 alert("Success! Code sent to " + email);
                 otpArea.style.display = "block";
@@ -101,3 +101,4 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
 });
 
 logoutBtn.onclick = () => auth.signOut();
+

@@ -1,4 +1,4 @@
-// 1. Firebase Configuration
+// 1. Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCj6KmcvgfVxCFTpjsL1GhpEVTMQH6OLAK",
   authDomain: "web-6ef07.firebaseapp.com",
@@ -9,81 +9,57 @@ const firebaseConfig = {
   measurementId: "G-TB7WB1E17B"
 };
 
-// 2. Initialize Firebase
+// 2. Initialize
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// 3. UI Elements
+// 3. Modal Controls
 const modal = document.getElementById("loginModal");
 const btn = document.getElementById("loginBtn");
-const span = document.getElementsByClassName("close")[0];
-const loginForm = document.getElementById('loginForm');
+const closeBtn = document.getElementById("closeModal");
 
-// Open Modal
-if(btn) {
-    btn.onclick = () => modal.style.display = "block";
+if (btn) {
+    btn.onclick = () => { modal.style.display = "block"; };
 }
 
-// Close Modal
-if(span) {
-    span.onclick = () => modal.style.display = "none";
+if (closeBtn) {
+    closeBtn.onclick = () => { modal.style.display = "none"; };
 }
 
-// Close Modal if user clicks outside of it
 window.onclick = (event) => {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+    if (event.target == modal) { modal.style.display = "none"; }
 };
 
-// 4. Handle Login Submission
-if(loginForm) {
+// 4. Login Function
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        console.log("Attempting login with:", email);
-
         auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                console.log("Logged in:", userCredential.user);
-                alert("Login Successful! Welcome back.");
+                alert("Login Successful!");
                 modal.style.display = "none";
-                // Optional: window.location.reload(); // Refresh to update UI
             })
             .catch((error) => {
-                console.error("Login Error:", error.code, error.message);
                 alert("Login failed: " + error.message);
+                console.error("Firebase Error:", error.code);
             });
     });
 }
 
-// 5. Events Grid Logic
+// 5. Events Logic (Keep your existing events code below)
 const myEvents = [
-    {
-        title: "AD ASTRA",
-        date: "FEB 2024",
-        description: "A month-long journey to build your technical skill set.",
-        link: "https://www.google.com"
-    },
-    {
-        title: "SOFTWARE TESTING",
-        date: "NOV 2024",
-        description: "Industrial approach to modern software methods.",
-        link: "https://www.google.com"
-    },
-    {
-        title: "RADIANCE",
-        date: "SEPT 2024",
-        description: "An exclusive orientation and networking event for freshmen.",
-        link: "https://www.google.com"
-    }
+    { title: "AD ASTRA", date: "FEB 2024", description: "Technical skills.", link: "https://google.com" },
+    { title: "SOFTWARE TESTING", date: "NOV 2024", description: "Industrial methods.", link: "https://google.com" },
+    { title: "RADIANCE", date: "SEPT 2024", description: "Orientation.", link: "https://google.com" }
 ];
 
 const container = document.getElementById('event-grid');
-if(container) {
+if (container) {
     myEvents.forEach(event => {
         container.innerHTML += `
             <div class="card">

@@ -1,3 +1,4 @@
+// 1. Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCj6KmcvgfVxCFTpjsL1GhpEVTMQH6OLAk",
   authDomain: "web-6ef07.firebaseapp.com",
@@ -10,6 +11,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+// 2. Variables & UI Elements
 const modal = document.getElementById("loginModal");
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -18,11 +20,13 @@ const loginSection = document.getElementById("loginSection");
 const signUpSection = document.getElementById("signUpSection");
 let generatedOTP = null;
 
+// 3. Navigation
 loginBtn.onclick = () => { modal.style.display = "block"; };
 document.getElementById("closeModal").onclick = () => { modal.style.display = "none"; };
 document.getElementById("toSignUp").onclick = (e) => { e.preventDefault(); loginSection.style.display = "none"; signUpSection.style.display = "block"; };
 document.getElementById("toLogin").onclick = (e) => { e.preventDefault(); signUpSection.style.display = "none"; loginSection.style.display = "block"; };
 
+// 4. Auth State Tracking
 auth.onAuthStateChanged((user) => {
     if (user) {
         loginBtn.style.display = "none";
@@ -36,58 +40,66 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
+// 5. SIGN UP & EMAIL LOGIC
 document.getElementById('signUpForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const emailValue = document.getElementById('signupEmail').value;
+    
+    const emailAddr = document.getElementById('signupEmail').value;
     const name = document.getElementById('signupName').value;
     const password = document.getElementById('signupPassword').value;
     const otpInput = document.getElementById('otpInput').value;
     const mainBtn = document.getElementById('mainSignupBtn');
 
     if (!generatedOTP) {
+        // Step A: Generate Code
         generatedOTP = Math.floor(100000 + Math.random() * 900000);
 
-        // Matching your template variables exactly
+        // Step B: Prepare parameters exactly as they appear in your Template Body
         const templateParams = {
-            email: emailValue, // Matches {{email}} in your screenshot
-            otp: generatedOTP,   // Ensure {{otp}} is in your template body
-            user_name: name
+            email: emailAddr,      // Matches {{email}} in "To Email"
+            passcode: generatedOTP, // Matches {{passcode}} in Body
+            user_name: name,
+            time: "15 minutes"     // Matches {{time}} in Body
         };
 
-        // Using your IDs: service_r60hbpq and template_8hjqxzg
+        // Step C: Send Email
         emailjs.send('service_r60hbpq', 'template_8hjqxzg', templateParams)
             .then(() => {
-                alert("Success! Check your Gmail for the code.");
+                alert("Success! Verification code sent to your Gmail.");
                 document.getElementById('otpArea').style.display = "block";
-                mainBtn.innerText = "Verify Code & Register";
+                mainBtn.innerText = "Verify & Complete Sign Up";
             })
             .catch((err) => {
-                alert("Email failed to send. Check console for details.");
+                alert("Email failed to send. Error: " + err.text);
                 console.error("EmailJS Error:", err);
                 generatedOTP = null; 
             });
             
     } else {
+        // Step D: Verify OTP and Register in Firebase
         if (otpInput == generatedOTP) {
-            auth.createUserWithEmailAndPassword(emailValue, password)
-                .then((res) => res.user.updateProfile({ displayName: name }))
+            auth.createUserWithEmailAndPassword(emailAddr, password)
+                .then((result) => {
+                    return result.user.updateProfile({ displayName: name });
+                })
                 .then(() => {
-                    alert("Account Created!");
+                    alert("Account Created Successfully!");
                     modal.style.display = "none";
                     generatedOTP = null;
                 })
-                .catch(err => alert(err.message));
+                .catch(err => alert("Firebase Error: " + err.message));
         } else {
-            alert("Wrong code!");
+            alert("Invalid code. Please check your email again.");
         }
     }
 });
 
+// 6. Login & Logout
 document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     auth.signInWithEmailAndPassword(document.getElementById('email').value, document.getElementById('password').value)
-        .then(() => modal.style.display = "none")
-        .catch(err => alert(err.message));
+        .then(() => { modal.style.display = "none"; })
+        .catch(err => alert("Login Failed: " + err.message));
 });
 
-logoutBtn.onclick = () => auth.signOut();
+logoutBtn.onclick = () => { auth.signOut(); };

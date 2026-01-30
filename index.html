@@ -19,19 +19,37 @@
         <div class="nav-links">
             <a href="#">Home</a>
             <a href="#">Events</a>
+            
             <button id="loginBtn" class="login-trigger">Login</button>
+            
+            <span id="userEmail" style="display:none; color: #3498db; font-weight: bold; margin-right: 10px;"></span>
+            <button id="logoutBtn" style="display:none;" class="logout-trigger">Logout</button>
         </div>
     </nav>
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
-            <h2>Member Login</h2>
-            <form id="loginForm">
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit" class="submit-btn">Sign In</button>
-            </form>
+            
+            <div id="loginSection">
+                <h2>Member Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit" class="submit-btn">Sign In</button>
+                </form>
+                <p>New here? <a href="#" id="toSignUp">Create an account</a></p>
+            </div>
+
+            <div id="signUpSection" style="display: none;">
+                <h2>Create Account</h2>
+                <form id="signUpForm">
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                    <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required>
+                    <button type="submit" class="submit-btn" style="background-color: #27ae60;">Register</button>
+                </form>
+                <p>Already have an account? <a href="#" id="toLogin">Login here</a></p>
+            </div>
         </div>
     </div>
 

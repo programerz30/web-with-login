@@ -10,12 +10,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        (function(){
-            // Your Public Key from screenshot
-            emailjs.init("Cr8Skylldo6vUX6ae"); 
-        })();
-    </script>
 </head>
 <body>
 
@@ -51,11 +45,10 @@
                 <form id="signUpForm">
                     <input type="text" id="signupName" placeholder="Full Name" required>
                     <input type="email" id="signupEmail" placeholder="Gmail Address" required>
-                    <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required>
+                    <input type="password" id="signupPassword" placeholder="Password" required>
                     
-                    <div id="otpArea" style="display:none; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
-                        <p style="color: #27ae60; font-size: 13px;">Check your Gmail for the code!</p>
-                        <input type="text" id="otpInput" placeholder="6-Digit Code">
+                    <div id="otpArea" style="display:none; margin-top: 15px;">
+                        <input type="text" id="otpInput" placeholder="Enter 6-Digit Code">
                     </div>
 
                     <button type="submit" id="mainSignupBtn" class="submit-btn" style="background-color: #27ae60;">Send Verification Code</button>

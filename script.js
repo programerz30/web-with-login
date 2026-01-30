@@ -1,6 +1,6 @@
 // 1. Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyCj6KmcvgfVxCFTpjsL1GhpEVTMQH6OLAK",
+  apiKey: "AIzaSyCj6KmcvgfVxCFTpjsL1GhpEVTMQH6OLAk",
   authDomain: "web-6ef07.firebaseapp.com",
   projectId: "web-6ef07",
   storageBucket: "web-6ef07.firebasestorage.app",
@@ -71,3 +71,4 @@ if (container) {
         `;
     });
 }
+

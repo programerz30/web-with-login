@@ -18,6 +18,7 @@
     </script>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="logo-container">
             <img src="logo.png" alt="CSI Logo" class="main-logo">
@@ -34,6 +35,7 @@
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
+            
             <div id="loginSection">
                 <h2>Member Login</h2>
                 <form id="loginForm">
@@ -50,15 +52,19 @@
                     <input type="text" id="signupName" placeholder="Full Name" required>
                     <input type="email" id="signupEmail" placeholder="Gmail Address" required>
                     <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required>
-                    <div id="otpArea" style="display:none; margin-top: 15px;">
+                    
+                    <div id="otpArea" style="display:none; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
+                        <p style="color: #27ae60; font-size: 13px;">Check your Gmail for the code!</p>
                         <input type="text" id="otpInput" placeholder="6-Digit Code">
                     </div>
+
                     <button type="submit" id="mainSignupBtn" class="submit-btn" style="background-color: #27ae60;">Send Verification Code</button>
                 </form>
                 <p><a href="#" id="toLogin">Back to Login</a></p>
             </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

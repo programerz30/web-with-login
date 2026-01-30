@@ -12,8 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         (function(){
-            // 1. TODO: Replace 'YOUR_PUBLIC_KEY' with your real key from EmailJS Account tab
-            emailjs.init("Cr8SkyIldo6vUX6ae");
+            // Your Public Key from screenshot integrated here
+            emailjs.init("Cr8Skylldo6vUX6ae"); 
         })();
     </script>
 </head>
@@ -51,25 +51,16 @@
                 <form id="signUpForm">
                     <input type="text" id="signupName" placeholder="Full Name" required>
                     <input type="email" id="signupEmail" placeholder="Gmail Address" required>
-                    <input type="tel" id="signupPhone" placeholder="Phone Number" required>
-                    
-                    <select id="signupDept" required style="width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px;">
-                        <option value="" disabled selected>Select Department</option>
-                        <option value="CSE">CSE</option>
-                        <option value="ECE">ECE</option>
-                        <option value="ME">Mechanical</option>
-                    </select>
-
                     <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required>
                     
                     <div id="otpArea" style="display:none; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
-                        <p style="color: #27ae60; font-size: 13px;">Enter the code sent to your Gmail:</p>
+                        <p style="color: #27ae60; font-size: 13px;">Check Gmail for the code!</p>
                         <input type="text" id="otpInput" placeholder="6-Digit Code">
                     </div>
 
                     <button type="submit" id="mainSignupBtn" class="submit-btn" style="background-color: #27ae60;">Send Verification Code</button>
                 </form>
-                <p>Already have an account? <a href="#" id="toLogin">Login here</a></p>
+                <p><a href="#" id="toLogin">Back to Login</a></p>
             </div>
         </div>
     </div>
@@ -77,5 +68,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
